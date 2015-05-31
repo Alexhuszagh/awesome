@@ -1,0 +1,85 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit fahrenheit
+
+# Window specifications #
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 200 250
+maximum_width 200
+
+alignment tr
+gap_x 35
+gap_y 55
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.8
+
+uppercase no
+
+temperature_unit celsius
+
+
+default_color 6ba026
+
+# Lua Load  #
+lua_load /home/alex/.config/awesome/powerarrowf/conky/clock_rings.lua
+lua_draw_hook_pre clock_rings
+
+TEXT
+${voffset 8}${color 6ba026}${font caviar dreams:size=16}${time %A}${font}${voffset -8}${alignr 50}${color 6ba026}${font caviar dreams:size=38}${time %e}${font}
+${color 6ba026}${voffset -30}${color 6ba026}${font caviar dreams:size=18}${time %b}${font}${voffset -3} ${color 6ba026}${font caviar dreams:size=20}${time %Y}${font}${color 566268}${hr}
+${voffset 140}${font caviar dreams:size=10}${alignr}HOME${font}
+${font caviar dreams:size=12}${color 6ba026}${alignr}${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ LQBK temperature temperature 30} °C${font}
+${image /home/alex/.config/awesome/powerarrowf/conky/new-ubuntu-logo.png -p 64,125 -s 70x20}
+
+${color 6ba026}${goto 25}${voffset 35}${cpu cpu0}%
+${color 566268}${goto 25}CPU
+${color 6ba026}${goto 50}${voffset 23}${memperc}%
+${color 566268}${goto 50}RAM
+${color 6ba026}${goto 75}${voffset 23}${swapperc}%
+${color 566268}${goto 75}Swap
+${color 6ba026}${goto 100}${voffset 23}${fs_used_perc /}%
+${color 566268}${goto 100}Disk
+${color 6ba026}${goto 125}${voffset 25}${downspeed eth0}
+${color 6ba026}${goto 125}${upspeed eth0}
+${color 566268}${goto 125}Net
+
+
+
+# ${color 6ba026}${font caviar dreams:size=8}Uptime: ${uptime_short}
+# ${color 6ba026}${font caviar dreams:size=8}Processes: ${processes}
+# ${color 6ba026}${font caviar dreams:size=8}Running: ${running_processes}
+
+
+# ${color 6ba026}${font caviar dreams:size=8}${alignr}${nodename}
+# ${color 6ba026}${font caviar dreams:size=8}${alignr}${pre_exec cat /etc/issue.net}  $machine
+# ${color 6ba026}${font caviar dreams:size=8}${alignr}Kernel: ${kernel}
