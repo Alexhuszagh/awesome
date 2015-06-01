@@ -24,7 +24,7 @@
 * Edited naughty/notify to enable custom tooltips above the cursor
 
 ![Image of tooltip]
-(https://github.com/vincentbernat/awesome-configuration)
+(http://i.imgur.com/MhZdHD9.png)
 
 ## Images
 
