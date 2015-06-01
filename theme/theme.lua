@@ -6,6 +6,7 @@ theme = {}
 
 -- Todo:  Change the $USER to yourself.
 pathToConfig = awful.util.getdir("config") .. "/"
+themeDir = pathToConfig .. "theme/"
 
 theme.font          = "sans 8"
 
@@ -34,8 +35,8 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
-theme.taglist_squares_sel   = pathToConfig .. "theme/icons/square_sel.png"
-theme.taglist_squares_unsel = pathToConfig .. "theme/icons/square_unsel.png"
+theme.taglist_squares_sel   = themeDir .. "icons/square_sel.png"
+theme.taglist_squares_unsel = themeDir .. "icons/square_unsel.png"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -74,23 +75,23 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- Dark moon background
-theme.wallpaper = "~/.config/awesome/theme/darkmoon.jpg"
+theme.wallpaper = themeDir .. "darkmoon.jpg"
 
 -- Hill with horses background
--- theme.wallpaper =  "/home/alex/.config/awesome/theme/default.jpg"
+-- theme.wallpaper =  themeDir .. "default.jpg"
 
 -- Alpine background
--- theme.wallpaper =  "/home/alex/.config/awesome/theme/alpine_wallpaper.jpg"
+-- theme.wallpaper =  themeDir .. "alpine_wallpaper.jpg"
 
 -- Design white background
--- theme.wallpaper =  "/home/alex/.config/awesome/theme/design_white.jpg"
+-- theme.wallpaper = themeDir .. "design_white.jpg"
 
 -- You can use your own layout icons like this:
--- theme.layout_floating  = pathToConfig .. "theme/layouts/floating.png"
--- theme.layout_tilebottom = pathToConfig .. "/theme/layouts/tilebottom.png"
--- theme.layout_tileleft   = pathToConfig .. "theme/layouts/tileleft.png"
--- theme.layout_tile = pathToConfig .. "theme/layouts/tile.png"
--- theme.layout_tiletop = pathToConfig .. "theme/layouts/tiletop.png"
+-- theme.layout_floating  = themeDir .. "layouts/floating.png"
+-- theme.layout_tilebottom = themeDir .. "layouts/tilebottom.png"
+-- theme.layout_tileleft   = themeDir .. "layouts/tileleft.png"
+-- theme.layout_tile = themeDir .. "layouts/tile.png"
+-- theme.layout_tiletop = themeDir .. "layouts/tiletop.png"
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
 theme.layout_fairv = "/usr/share/awesome/themes/default/layouts/fairvw.png"
 theme.layout_floating  = "/usr/share/awesome/themes/default/layouts/floatingw.png"
@@ -107,49 +108,49 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 --{{ For the Dark Theme }} --
 
-theme.arr1 = pathToConfig .. "theme/icons/arr1.png"
-theme.arr2 = pathToConfig .. "theme/icons/arr2.png"
-theme.arr3 = pathToConfig .. "theme/icons/arr3.png"
-theme.arr4 = pathToConfig .. "theme/icons/arr4.png"
-theme.arr5 = pathToConfig .. "theme/icons/arr5.png"
-theme.arr6 = pathToConfig .. "theme/icons/arr6.png"
-theme.arr7 = pathToConfig .. "theme/icons/arr7.png"
-theme.arr8 = pathToConfig .. "theme/icons/arr8.png"
-theme.arr9 = pathToConfig .. "theme/icons/arr9.png"
+theme.arr1 = themeDir .. "icons/arr1.png"
+theme.arr2 = themeDir .. "icons/arr2.png"
+theme.arr3 = themeDir .. "icons/arr3.png"
+theme.arr4 = themeDir .. "icons/arr4.png"
+theme.arr5 = themeDir .. "icons/arr5.png"
+theme.arr6 = themeDir .. "icons/arr6.png"
+theme.arr7 = themeDir .. "icons/arr7.png"
+theme.arr8 = themeDir .. "icons/arr8.png"
+theme.arr9 = themeDir .. "icons/arr9.png"
 
 -- The clock icon:
-theme.clock = pathToConfig .. "theme/icons/myclocknew.png"
+theme.clock = themeDir .. "icons/myclocknew.png"
 
 --{{ For the wifi widget icons }} --
-theme.nethigh = pathToConfig .. "theme/icons/nethigh.png"
-theme.netmedium = pathToConfig .. "theme/icons/netmedium.png"
-theme.netlow = pathToConfig .. "theme/icons/netlow.png"
+theme.nethigh = themeDir .. "icons/nethigh.png"
+theme.netmedium = themeDir .. "icons/netmedium.png"
+theme.netlow = themeDir .. "icons/netlow.png"
 
 --{{ For the battery icon }} --
-theme.baticon = pathToConfig .. "theme/icons/battery.png"
+theme.baticon = themeDir .. "icons/battery.png"
 
 --{{ For the hard drive icon }} --
-theme.fsicon = pathToConfig .. "theme/icons/hdd.png"
+theme.fsicon = themeDir .. "icons/hdd.png"
 
 --{{ For the volume icons }} --
-theme.mute = pathToConfig .. "theme/icons/mute.png"
-theme.music = pathToConfig .. "theme/icons/music.png"
+theme.mute = themeDir .. "icons/mute.png"
+theme.music = themeDir .. "icons/music.png"
 
 --{{ For the volume icon }} --
-theme.mute = pathToConfig .. "theme/icons/volmute.png"
-theme.volhi = pathToConfig .. "theme/icons/volhi.png"
-theme.volmed = pathToConfig .. "theme/icons/volmed.png"
-theme.vollow = pathToConfig .. "theme/icons/vollow.png"
+theme.mute = themeDir .. "icons/volmute.png"
+theme.volhi = themeDir .. "icons/volhi.png"
+theme.volmed = themeDir .. "icons/volmed.png"
+theme.vollow = themeDir .. "icons/vollow.png"
 
 --{{ For the CPU icon }} --
-theme.cpuicon = pathToConfig .. "theme/icons/cpu.png"
+theme.cpuicon = themeDir .. "icons/cpu.png"
 
 --{{ For the memory icon }} --
-theme.mem = pathToConfig .. "theme/icons/mem.png"
+theme.mem = themeDir .. "icons/mem.png"
 
 --{{ For the memory icon }} --
-theme.mail = pathToConfig .. "theme/icons/mail.png"
-theme.mailopen = pathToConfig .. "theme/icons/mailopen.png"
+theme.mail = themeDir .. "icons/mail.png"
+theme.mailopen = themeDir .. "icons/mailopen.png"
 
 
 -- Define the icon theme for application icons. If not set then the icons
