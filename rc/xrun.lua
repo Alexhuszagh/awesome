@@ -1,5 +1,5 @@
 -- {{{ Run program once
-local function processwalker()
+function processwalker()
    local function yieldprocess()
       for dir in lfs.dir("/proc") do
         -- All directories in /proc containing a number, represent a process
@@ -18,7 +18,7 @@ local function processwalker()
     return coroutine.wrap(yieldprocess)
 end
 
-local function run_once(process, cmd)
+function run_once(process, cmd)
    assert(type(process) == "string")
    local regex_killer = {
       ["+"]  = "%+", ["-"] = "%-",
@@ -49,6 +49,8 @@ run_once("~/.config/autostart/mpd.desktop")
 run_once("tilda")
 -- Start Compositor
 run_once("xcompmgr", "xcompmgr -CcfF -I-.02 -O-.04 -D0001 -t-5 -l-5 -r4.2 -o.82")
+-- Start conky last
+run_once("conky")
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
@@ -57,10 +59,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 do
   local cmds =
   {
-    -- {{ Launch background tasks
-    "~/.config/awesome/sh/cairo.sh",
-    "~/.config/awesome/sh/alarm.sh",
-    "~/.config/awesome/sh/conky.sh"
+    "~/.config/awesome/sh/alarm.sh"
     -- }}
 
     -- {{ Launch Foreground tasks

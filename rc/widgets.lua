@@ -55,19 +55,19 @@ fsicon:set_image(beautiful.fsicon)
 
 ----{{--| Volume / volume icon |----------
 volume = wibox.widget.textbox()
-vicious.register(volume, vicious.widgets.volume,
-'<span background="#4B3B51" font="Inconsolata 11"><span font="Inconsolata 11" color="#EEEEEE"> Vol: $1% </span></span>', 2, "Master")
--- Default is "Master"
+vicious.register(volume, vicious.contrib.pulse, function (widget, args)
+        return '<span background="#4B3B51" font="Inconsolata 11"><span font="Inconsolata 11" color="#EEEEEE"> Vol: '..math.floor(args[1])..' </span></span>'
+    end, 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
 
 volume:buttons(awful.util.table.join(
     awful.button({ }, 1, function () awful.util.spawn("amixer -D pulse sset Master toggle", false) end),
-    awful.button({ }, 3, function () awful.util.spawn(terminal.." -e alsamixer", true) end),
+    awful.button({ }, 3, function () run_in_terminal("alsamixer") end),
     awful.button({ }, 4, function () awful.util.spawn("amixer -D pulse sset Master 5%+", false) end),
     awful.button({ }, 5, function () awful.util.spawn("amixer -D pulse sset Master 5%-", false) end)
 ))
 
 volumeicon = wibox.widget.imagebox()
-vicious.register(volumeicon, vicious.widgets.volume, function(widget, args)
+vicious.register(volumeicon, vicious.contrib.pulse, function (widget, args)
     local paraone = tonumber(args[1])
 
     if args[2] == "♩" or paraone == 0 then
@@ -80,7 +80,7 @@ vicious.register(volumeicon, vicious.widgets.volume, function(widget, args)
         volumeicon:set_image(beautiful.vollow)
     end
 
-end, 0.3, "Master")
+end, 0.3, "alsa_output.pci-0000_00_1b.0.analog-stereo")
 
 --{{---| CPU / sensors widget |-----------
 cpuwidget = wibox.widget.textbox()
@@ -124,47 +124,47 @@ mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
-                    awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ modkey }, 1, awful.client.movetotag),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, awful.client.toggletag),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
-                    )
+    awful.button({ }, 1, awful.tag.viewonly),
+    awful.button({ modkey }, 1, awful.client.movetotag),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ modkey }, 3, awful.client.toggletag),
+    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
+    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
+    )
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  -- Without this, the following
-                                                  -- :isvisible() makes no sense
-                                                  c.minimized = false
-                                                  if not c:isvisible() then
-                                                      awful.tag.viewonly(c:tags()[1])
-                                                  end
-                                                  -- This will also un-minimize
-                                                  -- the client, if needed
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end),
-                     awful.button({ }, 3, function ()
-                                              if instance then
-                                                  instance:hide()
-                                                  instance = nil
-                                              else
-                                                  instance = awful.menu.clients({ width=250 })
-                                              end
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
-                                          end))
+     awful.button({ }, 1,
+      function (c)
+        if c == client.focus then
+            c.minimized = true
+        else
+            -- Without this, the following :isvisible() makes no sense
+            c.minimized = false
+            if not c:isvisible() then
+                awful.tag.viewonly(c:tags()[1])
+            end
+            -- This will also un-minimize the client, if needed
+            client.focus = c
+            c:raise()
+        end
+    end),
+     awful.button({ }, 3,
+      function ()
+          if instance then
+              instance:hide()
+              instance = nil
+          else
+              instance = awful.menu.clients({ width=250 })
+          end
+      end),
+     awful.button({ }, 4, function ()
+                              awful.client.focus.byidx(1)
+                              if client.focus then client.focus:raise() end
+                          end),
+     awful.button({ }, 5, function ()
+                              awful.client.focus.byidx(-1)
+                              if client.focus then client.focus:raise() end
+                          end))
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -189,9 +189,6 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
-    left_layout:add(spacer)
-    left_layout:add(spacer)
-    left_layout:add(spacer)
     left_layout:add(spacer)
     left_layout:add(mytaglist[s])
     left_layout:add(spacer)
@@ -231,6 +228,7 @@ for s = 1, screen.count() do
     layout:set_left(left_layout)
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
+    --layout:set_bottom(bottom_layout)
 
     mywibox[s]:set_widget(layout)
 end

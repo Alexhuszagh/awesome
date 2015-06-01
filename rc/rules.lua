@@ -53,8 +53,10 @@ awful.rules.rules = {
       properties = { tag = tags[screen.count()][2] }, switchtotag=true },
     { rule = { class = "VMD" },
       properties = { tag = tags[screen.count()][2] }, switchtotag=true },
-    { rule = { class = "libreoffice" },
-    properties = { tag = tags[screen.count()][2] }, switchtotag=true },
+    {  rule = { class = "libreoffice" },
+      properties = { tag = tags[screen.count()][2] }, switchtotag=true },
+    {  rule = { class = "gnumeric" },
+      properties = { tag = tags[screen.count()][2] }, switchtotag=true },
     -- Set browsers to map to 3
     { rule = { class = "Firefox" },
       properties = { tag = tags[screen.count()][3] }, switchtotag=true },
@@ -72,7 +74,7 @@ awful.rules.rules = {
     -- Set file launchers to 5
     { rule = { class = "Thunar" },
       properties = { tag = tags[screen.count()][5] }, switchtotag=true },
-    { rule = { class = "nautilus" },
+    { rule = { class = "Nautilus" },
       properties = { tag = tags[screen.count()][5] }, switchtotag=true },
     -- Set media to 6
     { rule = { class = "Spotify" },
@@ -82,6 +84,8 @@ awful.rules.rules = {
     { rule = { class = "Wine" },
       properties = { tag = tags[screen.count()][6] }, switchtotag=true },
     { rule = { class = "Kindle.exe" },
+      properties = { tag = tags[screen.count()][6] }, switchtotag=true },
+    { rule = { class = "Steam" },
       properties = { tag = tags[screen.count()][6] }, switchtotag=true },
     -- Set VMPlayer/VMWare Workstattion and/or OpenBox to 7
     { rule = { class = "Vmplayer" },
@@ -127,6 +131,8 @@ awful.rules.rules = {
         border_width = 0,
         sticky = true,
         ontop = false,
+        above = false,
+        focus = false,
         focusable = false,
         size_hints = {"program_position", "program_size"},
         callback = awful.client.setslave

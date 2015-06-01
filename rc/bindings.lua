@@ -12,6 +12,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
+    awful.key({ modkey,           }, "`",
+        function ()
+            local quake = loadrc("quake")
+            quake.toggle({ terminal = "urxvt -depth 32 -bg rgba:3f00/3f00/3f00/dddd",
+            name = "QuakeTilda",
+            height = 0.3,
+            ontop = true,
+            skip_taskbar = true })
+        end),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -30,7 +39,10 @@ globalkeys = awful.util.table.join(
             end
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey,           }, "w",
+      function ()
+        awful.menu.toggle(mymainmenu)
+      end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j",
@@ -216,5 +228,4 @@ globalkeys = awful.util.table.join(
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
               end)
-    -- Menubar
 )

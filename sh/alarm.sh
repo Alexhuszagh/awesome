@@ -15,7 +15,7 @@ function killprocess ()
 
 function launch()
 {
-    alarm-clock-applet --hidden
+    alarm-clock-applet --hidden &
 }
 
 

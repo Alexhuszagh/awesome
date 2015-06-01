@@ -11,6 +11,7 @@ beautiful = require("beautiful")
 naughty = require("naughty")
 menubar = require("menubar")
 vicious = require("vicious")
+vicious.contrib = require("vicious.contrib")
 -- Core lua libraries
 lfs = require("lfs")
 
@@ -31,6 +32,7 @@ beautiful.init(themes_dir .. "/theme.lua")
 
 -- This is used later as the default terminal, browser and editor to run.
 terminal = "x-terminal-emulator"
+dropdown_terminal = "tilda"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 browser = "chromium-browser"
@@ -96,6 +98,14 @@ function loadrc(name, mod)
    return result
 end
 
+-- {{{ Utils
+
+function run_in_terminal(cmd)
+  awful.util.spawn_with_shell('gnome-terminal -x bash -c "' .. cmd .. '"; exec $SHELL')
+end
+
+-- }}}
+
 -- Define spawn cmds
 
 spawn_cmd = {
@@ -124,15 +134,16 @@ clientkeys = awful.util.table.join(
         end)
 )
 
+-- draw conky first, interferes with others
+loadrc("menu")
+loadrc("statusbar")
+loadrc("widgets")
 loadrc("appearance")
 loadrc("themes")
 loadrc("bindings")
-loadrc("menu")
-loadrc("tags")
 loadrc("errors")
-loadrc("widgets")
 loadrc("signals")
+loadrc("tags")
 loadrc("xrandr")
 loadrc("xrun")
 loadrc("rules")
-

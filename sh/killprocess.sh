@@ -1,24 +1,20 @@
 #!/bin/bash
 
+# CONSTANTS
+cmd="$1"
+
 # FUNCTIONS
 
 function killprocess ()
 {
-    if pgrep conky > /dev/null
+    if pgrep $cmd > /dev/null
     then
-         kill -9 $(pgrep conky)
+         kill -9 $(pgrep $cmd)
     else
         :
     fi
 }
 
-function launch()
-{
-    conky &
-}
-
-
 # CALL FUNCTIONS
 
 killprocess
-launch

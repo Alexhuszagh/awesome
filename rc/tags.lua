@@ -53,22 +53,7 @@ for i = 1, 9 do
                         for i=1, #tag:clients() do
                             tag:clients()[i].minimized = false
                         end
-                 end),
-        -- Custom setting to raise cairo-dock
-        awful.key({ modkey, "Shift"   }, "m",
-         function()
-              local all_clients = client.get()
-              for i, c in pairs(all_clients) do
-                if c.instance == "cairo-dock" then
-                    client.focus = c
-                    if c:isvisible() then
-                      c:lower()
-                    else
-                      c:raise()
-                    end
-                end
-              end
-         end))
+                 end))
 end
 
 clientbuttons = awful.util.table.join(

@@ -39,13 +39,13 @@ tags = {
          '✣:IRC',
            },
  layout = {
-      layouts[5],   -- 1:Code
-      layouts[10],  -- 2:Science
-      layouts[10],  -- 3:Chrome
+      layouts[3],   -- 1:Code
+      layouts[7],  -- 2:Science
+      layouts[7],  -- 3:Chrome
       layouts[12],  -- 4:HTTP
       layouts[2],   -- 5:Term
-      layouts[10],  -- 6:Media
-      layouts[10],  -- 7:VM
+      layouts[5],  -- 6:Media
+      layouts[7],  -- 7:VM
       layouts[2],   -- 8:Notes
       layouts[10],  -- 9:IRC
           }
