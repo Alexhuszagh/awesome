@@ -126,12 +126,12 @@ awful.rules.rules = {
     },
     { rule = { class = "Conky" },
       properties = {
-        floating = true,
+        --floating = true,
         -- Need to disable borders
         border_width = 0,
         sticky = true,
         ontop = false,
-        above = false,
+        below = true,
         focus = false,
         focusable = false,
         size_hints = {"program_position", "program_size"},

@@ -16,7 +16,7 @@ globalkeys = awful.util.table.join(
         function ()
             local quake = loadrc("quake")
             quake.toggle({ terminal = "urxvt -depth 32 -bg rgba:3f00/3f00/3f00/dddd",
-            name = "QuakeTilda",
+            name = "Quackable",
             height = 0.3,
             ontop = true,
             skip_taskbar = true })
@@ -178,7 +178,7 @@ globalkeys = awful.util.table.join(
     -- Sublime Text
     awful.key({ modkey,"Shift"    }, "s",
         function ()
-          awful.util.spawn("sublime-text")
+          awful.util.spawn("subl")
         end,
         function()
         -- View tag only.

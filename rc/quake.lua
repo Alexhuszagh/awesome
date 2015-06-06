@@ -124,8 +124,8 @@ function QuakeConsole:new(config)
    -- If width or height <= 1 this is a proportion of the workspace
    config.height   = config.height   or 0.25           -- height
    config.width    = config.width    or 1          -- width
-   config.vert     = config.vert     or "top"          -- top, bottom or center
-   config.horiz    = config.horiz    or "center"       -- left, right or center
+   config.vert     = config.vert     or "bottom"          -- top, bottom or center
+   config.horiz    = config.horiz    or "right"       -- left, right or center
 
    config.screen   = config.screen or mouse.screen
    config.visible  = config.visible or true

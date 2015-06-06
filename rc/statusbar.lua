@@ -1,9 +1,94 @@
 
 -- load core libraries
 local math = require("math")
+local capi = { screen = screen,
+               awesome = awesome,
+               dbus = dbus,
+               timer = timer,
+               awesome = awesome }
 
 -- load modded awesome configurations
 naughty_offset = loadrc("naughty_offset")
+
+-- {{{ Signals
+
+-- Connect signal
+local function connect(wb, data)
+  -- Connect enter to make tooltip
+  wb:connect_signal("mouse::enter",
+     function(c)
+        if wb.hover_notification == nil  then
+          local nt = data
+          nt.screen = mouse.screen
+          position = mouse.coords()
+          -- underflow
+          local char_count = char_count(data['text'], "\n")
+          char_count = math.max(char_count-2, 1)
+          position['y'] = position['y'] - (10*char_count)
+          if position['x'] <= 50 then
+            nt.position = "bottom_left"
+            wb.hover_notification = naughty.notify(nt)
+           -- greater than screen width
+          elseif position['x'] + 200 > 1900 then
+            nt.position = "bottom_right"
+            wb.hover_notification = naughty.notify(nt)
+          else
+            nt.position = "bottom_right"
+            nt.position_exact = position
+            wb.hover_notification = naughty_offset.notify(nt)
+          end
+       end
+     end)
+  -- Connect leave event to destroy tooltip
+  wb:connect_signal("mouse::leave",
+     function(c)
+        if wb.hover_notification ~= nil then
+           naughty.destroy(wb.hover_notification)
+           wb.hover_notification = nil
+        end
+     end)
+end
+
+-- Disconnect Signal
+
+local function disconnect(wb, data)
+  -- Disconnect enter to make tooltip
+  wb:disconnect_signal("mouse::enter",
+     function(c)
+        if wb.hover_notification == nil  then
+          local nt = data
+          nt.screen = mouse.screen
+          position = mouse.coords()
+          -- underflow
+          local char_count = char_count(data['text'], "\n")
+          char_count = math.max(char_count-2, 1)
+          position['y'] = position['y'] - (10*char_count)
+          if position['x'] <= 50 then
+            nt.position = "bottom_left"
+            wb.hover_notification = naughty.notify(nt)
+           -- greater than screen width
+          elseif position['x'] + 200 > 1900 then
+            nt.position = "bottom_right"
+            wb.hover_notification = naughty.notify(nt)
+          else
+            nt.position = "bottom_right"
+            nt.position_exact = position
+            wb.hover_notification = naughty_offset.notify(nt)
+          end
+       end
+     end)
+  -- Disconnect leave event to destroy tooltip
+  wb:disconnect_signal("mouse::leave",
+     function(c)
+        if wb.hover_notification ~= nil then
+           naughty.destroy(wb.hover_notification)
+           wb.hover_notification = nil
+        end
+     end)
+end
+
+
+-- }}}
 
 -- {{{ Tooltip
 
@@ -23,38 +108,19 @@ function char_count(str, char)
 end
 
 -- Adds a hovering tooltip over the widget
-function add_hover_tooltip(wb, data)
- wb:connect_signal("mouse::enter",
-                  function(c)
-                     if wb.hover_notification == nil  then
-                       local nt = data
-                       nt.screen = mouse.screen
-                       position = mouse.coords()
-                       -- underflow
-                       local char_count = char_count(data['text'], "\n")
-                       char_count = math.max(char_count-2, 1)
-                       position['y'] = position['y'] - (10*char_count)
-                       if position['x'] <= 50 then
-                         nt.position = "bottom_left"
-                         wb.hover_notification = naughty.notify(nt)
-                        -- greater than screen width
-                       elseif position['x'] + 200 > 1900 then
-                         nt.position = "bottom_right"
-                         wb.hover_notification = naughty.notify(nt)
-                       else
-                         nt.position = "bottom_right"
-                         nt.position_exact = position
-                         wb.hover_notification = naughty_offset.notify(nt)
-                       end
-                    end
-                  end)
- wb:connect_signal("mouse::leave",
-                  function(c)
-                     if wb.hover_notification ~= nil then
-                        naughty.destroy(wb.hover_notification)
-                        wb.hover_notification = nil
-                     end
-                  end)
+function add_hover_tooltip (arg)
+
+  -- Bind connects
+  connect(arg.wb, arg.data)
+  -- Die signal for when the tooltip runs out
+  if arg.timeout ~= nil then
+    local timer_die = capi.timer { timeout = arg.timeout }
+    timer_die:connect_signal("timeout",
+      function()
+        disconnect(arg.wb, arg.data)
+      end)
+    timer_die:start()
+  end
 end
 
 -- }}} Tooltip
@@ -75,7 +141,11 @@ local widgets = statusbar.widgets
 -- Checks to see if the command is currently running
 function running(cmd)
   fpid = io.popen("pgrep " .. cmd)
-  pid = tonumber(fpid:read("*n"))
+  if fpid ~= nil then
+    pid = tonumber(fpid:read("*n"))
+  else
+    pid = nil
+  end
   return pid
 end
 
@@ -104,7 +174,7 @@ function bind(wb, cmd, grep, icon, time, name, description, tag_number)
       timeout = 0,
       icon=iconDir .. icon .. ".png"
   }
-  add_hover_tooltip(wb, data)
+  add_hover_tooltip{wb=wb, data=data}
 
   -- Connect to a menu
   local quit = awful.util.getdir("config") .. "/sh/quitprocess.sh " .. cmd
@@ -142,7 +212,9 @@ function statusbar.create(s)
    local wb = awful.wibox { position = statusbar.position,
                             screen = s,
                             height = 30,
-                            ontop = true, }
+                            --ontop = true,
+                            sticky = true,
+                            above = true }
     wb:set_bg("#101010")
 
    -- Widgets that are aligned to the top
@@ -240,7 +312,7 @@ function statusbar.initialize()
       timeout = 0,
       icon=iconDir .. "start-here-arch3.png"
   }
-   add_hover_tooltip(widgets.menu_icon, data)
+   add_hover_tooltip{wb=widgets.menu_icon, data=data}
    widgets.menu_icon:buttons(awful.util.table.join(
     awful.button({ }, 1,
       function ()
@@ -275,7 +347,7 @@ function statusbar.initialize()
 
    widgets.sublime_icon = wibox.widget.imagebox()
    bind(widgets.sublime_icon, "subl", "sublime", "sublime", 1,
-        "Sublime", "Sublime Text Version 2", 1)
+        "Sublime", "Sublime Text Version 3", 1)
 
    -- Mail Apps and Messaging
    widgets.thunderbird_icon = wibox.widget.imagebox()
@@ -360,8 +432,11 @@ function statusbar.initialize()
    widgets.weather = wibox.widget.imagebox()
    vicious.register(widgets.weather, vicious.widgets.weather,
       function (widget, args)
+        -- Base params
         local weather = args["{weather}"]
         local sky = args["{sky}"]
+        local timeout = 1800
+        -- Check sky conditions
         if sky == "Overcast" then
           icon = iconDir ..  "weather-overcast.png"
         elseif sky == "Mostly Cloudy" then
@@ -373,7 +448,9 @@ function statusbar.initialize()
         else
           icon = iconDir ..  "weather-few-clouds-night.png"
         end
+        -- Set image
         widgets.weather:set_image(icon)
+        -- Make hover tooltip
         data = {
            text = "City: " .. args['{city}'].. "\nWeather: " .. weather .. "\nSky Conditions: " .. sky .. "\nTemperature: " .. args['{tempc}'] .. "\nWind: " .. args['{wind}'] .. "\nHumidity: " .. args['{humid}'],
            title = "Current Weather Forecast",
@@ -381,16 +458,19 @@ function statusbar.initialize()
            icon=icon,
            offset=-50
         }
-        add_hover_tooltip(widgets.weather, data)
+        add_hover_tooltip{wb=widgets.weather, data=data, timeout=timeout}
       end,
-      1800, "KSNA")
+      timeout, "KSNA")
 
 
    -- System Utilities
    widgets.battery_icon = wibox.widget.imagebox()
    vicious.register(widgets.battery_icon, vicious.widgets.bat,
       function (widget, args)
+        -- Base params
         local batteryprct = tonumber(args[2])
+        local timeout = 30
+        -- Set battery image
         if batteryprct == 100 then
           icon = iconDir ..  "battery-full.png"
         elseif batteryprct >= 67 and batteryprct <= 100 then
@@ -403,15 +483,16 @@ function statusbar.initialize()
           icon = iconDir ..  "battery-main.png"
         end
         widgets.battery_icon:set_image(icon)
+        -- Make hover tooltip
         data = {
            text = "Percentage: " .. args[2] .. "\nState: " .. args[1] .. "\nRemaining Time: " .. args[3] .. "\n",
            title = "Battery",
            timeout = 0,
            icon=icon
         }
-        add_hover_tooltip(widgets.battery_icon, data)
+        add_hover_tooltip{wb=widgets.battery_icon, data=data, timeout=timeout}
       end,
-      1, "BAT0")
+      timeout, "BAT0")
 
    widgets.logout_icon = wibox.widget.imagebox()
    widgets.logout_icon:set_image(iconDir ..  "logout.png")
