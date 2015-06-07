@@ -1,5 +1,7 @@
+-- Set base params
 iconDir = awful.util.getdir("config") .. "/theme/icons/"
 local widgets = statusbar.widgets
+quakes_consoles = 0
 
 -- Makes the widgets for the statusbar
 function statusbar.initialize()
@@ -8,7 +10,7 @@ function statusbar.initialize()
   widgets.spacer:set_markup("      ")
 
   widgets.separator = wibox.widget.textbox()
-  widgets.separator:set_markup("                  ")
+  widgets.separator:set_markup("                    ")
 
     -- Menu
   local wb = awful.widget.button({ image = iconDir .. "start-here-arch3.png"})
@@ -38,7 +40,7 @@ function statusbar.initialize()
   }
   widgets.software = {wibox=wb, data=data}
 
-  -- Terminal + Code Editors
+  -- Terminal
   local wb = wibox.widget.imagebox()
   local data = {
     cmd="gnome-terminal",
@@ -51,6 +53,32 @@ function statusbar.initialize()
   }
   widgets.terminal = {wibox=wb, data=data}
 
+  local wb = wibox.widget.imagebox()
+  local data = {
+    cmd="tilda",
+    pgrep="tilda",
+    icon="tilda",
+    time=1,
+    name="Tilda",
+    description="Fixed Position Quake Terminal",
+    tag_number=nil
+  }
+  widgets.tilda = {wibox=wb, data=data}
+
+  local wb = wibox.widget.imagebox()
+  local data = {
+    --cmd="tdrop -W urxvt",
+    cmd="tdrop -W urxvt",
+    pgrep="urxvt",
+    icon="urxvt",
+    time=1,
+    name="URxvt",
+    description="Non-Floating, Tiled Quake Terminal",
+    tag_number=nil
+  }
+  widgets.urxvt = {wibox=wb, data=data}
+
+  -- Code Editors
   local wb = wibox.widget.imagebox()
   local data = {
     cmd="gvim",
@@ -290,7 +318,7 @@ function statusbar.initialize()
   local wb = wibox.widget.imagebox()
   local data = {
     cmd="frostwire",
-    pgrep="frostwire",
+    grep="frostwire",
     icon="frostwire",
     time=1,
     name="FrostWire",
@@ -301,7 +329,7 @@ function statusbar.initialize()
   local wb = wibox.widget.imagebox()
   local data = {
     cmd="transmission-gtk",
-    grep="transmission-gtk",
+    pgrep="transmission",
     icon="transmission",
     time=1,
     name="Transmission",
@@ -342,7 +370,7 @@ function statusbar.initialize()
       widgets.weather.tooltip = data
       add_hover_tooltip(widgets.weather)
     end,
-    1800, "KSNA")
+    1800, private.location)
 
   -- System Utilities
   local wb = wibox.widget.imagebox()
@@ -375,7 +403,7 @@ function statusbar.initialize()
       widgets.battery.tooltip = data
       add_hover_tooltip(widgets.battery)
     end,
-  timeout, "BAT0")
+  timeout, private.battery)
 
   local wb = wibox.widget.imagebox()
   wb:set_image(iconDir ..  "logout.png")

@@ -60,7 +60,6 @@ arr9 = wibox.widget.imagebox()
 arr9:set_image(beautiful.arr9)
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
@@ -106,44 +105,41 @@ end
 
 -- }}}
 
+-- {{{ Bindings
+
+globalkeys = {}
+clientkeys = {}
+
+-- }}}
+
 -- Define spawn cmds
 
 spawn_cmd = {
     ["ncmpcpp"] = function() awful.util.spawn_with_shell(terminal .. " -e ncmpcpp") end
 }
 
-clientkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized end),
-    awful.key({ modkey,           }, "m",
-        function (c)
-            c.maximized_Ahorizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end),
-    -- bind PrintScrn to capture a screen
-    awful.key(
-        {},
-        "Print",
-        function()
-            awful.util.spawn( "gnome-screenshot" ,false )
-        end)
-)
-
--- draw conky first, interferes with others
+-- Require private attributes first
+loadrc("private")
+-- Make widgets first
 loadrc("menu")
 loadrc("statusbar")
 loadrc("widgets")
+-- Set appearance, theming
 loadrc("appearance")
 loadrc("themes")
-loadrc("bindings")
+-- Load key bindings
+require("lib/bindings/client")
+require("lib/bindings/awesome")
+require("lib/bindings/tags")
+require("lib/bindings/launchers")
+require("lib/bindings/layout")
+require("lib/bindings/utils")
+-- Process errors, set signals
 loadrc("errors")
 loadrc("signals")
+-- Set layout tags and process screens
 loadrc("tags")
 loadrc("xrandr")
+-- Run applications and set rules
 loadrc("xrun")
 loadrc("rules")

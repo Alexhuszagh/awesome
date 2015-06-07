@@ -1,11 +1,13 @@
 -- Binds the wibox to the active and inactive slots
 function bind(table)
+
   -- Skip if not bindable
   if table.data == nil
     then return
   elseif table.data.cmd == nil
     then return
   end
+
   -- Register to vicious
   vicious.register(table.wibox,
   function ()
@@ -17,11 +19,6 @@ function bind(table)
     end
   end, table.data.time)
 
-  findme = table.data.cmd
-  firstspace = table.data.cmd:find(" ")
-  if firstspace then
-    findme = table.data.cmd:sub(0, firstspace-1)
-  end
   -- Connect to tooltip
   table.tooltip = {
       text = table.data.description,
@@ -32,11 +29,19 @@ function bind(table)
   add_hover_tooltip(table)
 
   -- Connect to a menu
-  local quit = awful.util.getdir("config") .. "/sh/quitprocess.sh " .. table.data.cmd
-  local kill = awful.util.getdir("config") .. "/sh/killprocess.sh " .. table.data.cmd
+  local endprocess = awful.util.getdir("config") .. "/sh/killprocess.sh"
+  if table.data.grep ~= nil then
+    quit = endprocess .. " -a" .. table.data.grep
+    kill = endprocess .. " -q SIGKILL -a" .. table.data.grep
+  else
+    quit = endprocess .. " -g" .. table.data.pgrep
+    kill = endprocess .. " -q SIGKILL -g" .. table.data.pgrep
+  end
+
   local window = {{ "&Open", table.data.cmd },
                   { "&Quit", quit },
                   { "&Kill", kill }}
+
   --local mywidgetmenu = awful.menu.new({ items = { {"Window", window} } })
   local mywidgetmenu = awful.menu.new({ items = window })
   table.wibox:buttons(awful.util.table.join(

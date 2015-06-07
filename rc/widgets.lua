@@ -44,7 +44,7 @@ baticon = wibox.widget.imagebox()
 baticon:set_image(beautiful.baticon)
 
 batwidget = wibox.widget.textbox()
-vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Inconsolata 11"><span font="Inconsolata 11" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 30, "BAT0" )
+vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Inconsolata 11"><span font="Inconsolata 11" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 30, private.battery)
 
 --{{---| File Size widget |-----
 fswidget = wibox.widget.textbox()

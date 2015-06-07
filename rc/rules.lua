@@ -1,4 +1,10 @@
+-- Base params
+local screengeom = screen[mouse.screen].workarea
+tildawidth  = screengeom.width  * 0.25
+tildaheight = screengeom.height * 0.35
+
 -- {{{ Rules
+
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
@@ -18,7 +24,7 @@ awful.rules.rules = {
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
-      properties = { floating = true } },
+      properties = { floating = false } },
     -- Code Editors
     { rule = { class = "Geany" },
       properties = { tag = tags[screen.count()][1] }, switchtotag=true },
@@ -137,12 +143,12 @@ awful.rules.rules = {
         border_color = "#92B0A0",
         ontop = true,
         above = true,
-        callback = function(c)
-          local screengeom = screen[mouse.screen].workarea
-          width  = screengeom.width  * 0.25
-          height = screengeom.height * 0.35
-          c:geometry({ x=30, y=30, width = width, height = height })
-        end
+        geometry = { width = tildawidth,
+                     height = tildaheight }
+        -- callback = function(c)
+        --   local geometry = c:geometry()
+        --   c:geometry( { x = geometry.x, y = geometry.y } )
+        -- end
       }
     },
     -- Dropdown, non-floating terminal
