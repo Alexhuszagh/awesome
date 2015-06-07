@@ -49,9 +49,15 @@
 
 ## Other Notes
 
-* Configured to work with pulseaudio
-* Has a custom bottom panel similar to a dock, which disappears on maximization
+* Configured to work with pulseaudio or an alsa-supported codec.
+* Has a custom bottom panel that acts like a dock.
+    * Auto-hides, auto-shows upon mouse-entry on the bottom of the screen.
+    * Can be manually configured to lock visible or hidden.
 * Edited naughty/notify to enable custom tooltips above the cursor
+* Use 3 terminal sets -- gnome-terminal, urxvt, and tilda
+    * gnome-terminal as the core terminal, full screen and locked to a tag.
+    * urxvt as a tiled, dropdown terminal.
+    * tilda as a floating, fixed-size, dropdown terminal.
 
 ![Image of tooltip]
 (http://i.imgur.com/MhZdHD9.png)
