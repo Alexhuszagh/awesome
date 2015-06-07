@@ -15,6 +15,14 @@
     ```
 
 * Download files and copy to ~/.config/awesome, so the load path for rc.lua is ~/.config/awesome/rc.lua
+* Edit the awesome/private.lua file
+    * Change location to your nearest 4 digit area code for an airport found from [here] (http://weather.noaa.gov/)
+    * Change the audio depending on whether you use pulse or alsa-supported codec.
+    * Change the battery to the value given here
+    ```shell
+    ls /sys/class/power_supply/ | grep BAT
+    ```
+
 * Run in awesome mode.
 * Everything should be generic for your system, but many of the installed applications, etc. are not standard (such as scientific software). Install what you want, but I do not recommend using this configuration.
 * I also use the Ambiance-Dark-Blue GTK theme from NoobsLab, which can be installed from their Ubuntu PPA.
