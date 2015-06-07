@@ -2,8 +2,9 @@
 
 ## Acknowledgements
 
-* This theme is a fork from [Powerarrow] (https://github.com/esn89/powerarrow) from user @esn89
+* This theme is a fork from [Powerarrow] (https://github.com/esn89/powerarrow) from @esn89
 * I use the GTK stylings from @vincentbernat's [Awesome Configuration] (https://github.com/vincentbernat/awesome-configuration)
+* I use [awesompd] (https://github.com/alexander-yakushev/awesompd) from @alexander-yakushev
 
 ## Install
 
