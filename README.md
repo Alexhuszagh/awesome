@@ -7,6 +7,8 @@
 
 ## Install
 
+#### Instructions are for Ubuntu 15.04
+
 * Install Awesome Window Manager
     ```shell
     # apt-get install awesome awesome-extr
