@@ -112,18 +112,8 @@ awful.rules.rules = {
     -- Set file launchers to 5
     { rule = { class = "Pidgin" },
       properties = { tag = tags[screen.count()][9] }, switchtotag=true },
-      { rule = { class = "empathy" },
+    { rule = { class = "empathy" },
       properties = { tag = tags[screen.count()][9] }, switchtotag=true },
-    -- type = "dock",
-    { rule = { instance = "cairo-dock" },
-      properties = {
-            floating = true,
-            maximized_horizontal = true,
-            -- Need to disable borders
-            border_width = 0,
-            callback = awful.client.setslave
-      }
-    },
     { rule = { class = "Conky" },
       properties = {
         --floating = true,
@@ -136,6 +126,34 @@ awful.rules.rules = {
         focusable = false,
         size_hints = {"program_position", "program_size"},
         callback = awful.client.setslave
+      }
+    },
+    -- Dropdown, floating terminal
+    { rule = { class = "Tilda" },
+      properties = {
+        floating = true,
+        -- Need to disable borders
+        border_width = 10,
+        border_color = "#92B0A0",
+        ontop = true,
+        above = true,
+        callback = function(c)
+          local screengeom = screen[mouse.screen].workarea
+          width  = screengeom.width  * 0.25
+          height = screengeom.height * 0.35
+          c:geometry({ x=30, y=30, width = width, height = height })
+        end
+      }
+    },
+    -- Dropdown, non-floating terminal
+    { rule = { instance = "urxvt" },
+      properties = {
+        floating = false,
+        -- Need to disable borders
+        border_width = 10,
+        border_color = "#92B0A0",
+        ontop = true,
+        above = true
       }
     }
 }

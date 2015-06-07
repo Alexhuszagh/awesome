@@ -1,3 +1,6 @@
+-- Load external widgets
+loadrc("topbar/volume")
+
 -- {{{ Wibox
 
 --{{-- Time and Date Widget }} --
@@ -52,35 +55,6 @@ vicious.register(fswidget, vicious.widgets.fs,
 
 fsicon = wibox.widget.imagebox()
 fsicon:set_image(beautiful.fsicon)
-
-----{{--| Volume / volume icon |----------
-volume = wibox.widget.textbox()
-vicious.register(volume, vicious.contrib.pulse, function (widget, args)
-        return '<span background="#4B3B51" font="Inconsolata 11"><span font="Inconsolata 11" color="#EEEEEE"> Vol: '..math.floor(args[1])..' </span></span>'
-    end, 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
-
-volume:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () awful.util.spawn("amixer -D pulse sset Master toggle", false) end),
-    awful.button({ }, 3, function () run_in_terminal("alsamixer") end),
-    awful.button({ }, 4, function () awful.util.spawn("amixer -D pulse sset Master 5%+", false) end),
-    awful.button({ }, 5, function () awful.util.spawn("amixer -D pulse sset Master 5%-", false) end)
-))
-
-volumeicon = wibox.widget.imagebox()
-vicious.register(volumeicon, vicious.contrib.pulse, function (widget, args)
-    local paraone = tonumber(args[1])
-
-    if args[2] == "♩" or paraone == 0 then
-        volumeicon:set_image(beautiful.mute)
-    elseif paraone >= 67 and paraone <= 100 then
-        volumeicon:set_image(beautiful.volhi)
-    elseif paraone >= 33 and paraone <= 66 then
-        volumeicon:set_image(beautiful.volmed)
-    else
-        volumeicon:set_image(beautiful.vollow)
-    end
-
-end, 0.3, "alsa_output.pci-0000_00_1b.0.analog-stereo")
 
 --{{---| CPU / sensors widget |-----------
 cpuwidget = wibox.widget.textbox()
@@ -206,8 +180,8 @@ for s = 1, screen.count() do
     right_layout:add(cpuicon)
     right_layout:add(cpuwidget)
     right_layout:add(arr6)
-    right_layout:add(volumeicon)
-    right_layout:add(volume)
+    right_layout:add(volume.icon)
+    right_layout:add(volume.wibox)
     right_layout:add(arr5)
     right_layout:add(fsicon)
     right_layout:add(fswidget)

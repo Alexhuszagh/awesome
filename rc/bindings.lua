@@ -14,12 +14,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey,           }, "`",
         function ()
-            local quake = loadrc("quake")
-            quake.toggle({ terminal = "urxvt -depth 32 -bg rgba:3f00/3f00/3f00/dddd",
-            name = "Quackable",
-            height = 0.3,
-            ontop = true,
-            skip_taskbar = true })
+          awful.util.spawn("tdrop -W urxvt")
         end),
     awful.key({ modkey,           }, "j",
         function ()
@@ -87,6 +82,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    awful.key({ modkey,           }, "l", function() statusbar.toggle() end ),
 
     -- Volume
     awful.key({ }, "XF86AudioLowerVolume", function() awful.util.spawn("amixer -D pulse sset Master 5%-") end),
@@ -118,7 +114,7 @@ globalkeys = awful.util.table.join(
         awful.util.spawn("xbacklight -inc 15") end),
 
     -- Prompt
-   --  awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+   awful.key({ modkey, "Shift"    },        "r",     function () mypromptbox[mouse.screen]:run() end),
 
     -- Custom Programs
     -- ncmpcpp
@@ -176,7 +172,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Sublime Text
-    awful.key({ modkey,"Shift"    }, "s",
+    awful.key({ modkey, "Shift"    }, "s",
         function ()
           awful.util.spawn("subl")
         end,
@@ -190,7 +186,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Chromium
-    awful.key({ modkey,"Shift"    }, "g",
+    awful.key({ modkey, "Shift"    }, "g",
         function ()
           awful.util.spawn("chromium-browser")
         end,
@@ -204,7 +200,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Alarm Clock
-    awful.key({ modkey,"Shift"    }, "i",
+    awful.key({ modkey, "Shift"    }, "i",
         function ()
           awful.util.spawn("~/icecat/icecat")
         end,
