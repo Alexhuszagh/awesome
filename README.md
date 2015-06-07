@@ -16,6 +16,26 @@
 * Run in awesome mode.
 * Everything should be generic for your system, but many of the installed applications, etc. are not standard (such as scientific software). Install what you want, but I do not recommend using this configuration.
 * I also use the Ambiance-Dark-Blue GTK theme from NoobsLab, which can be installed from their Ubuntu PPA.
+    ```
+    sudo add-apt-repository ppa:noobslab/themes
+    sudo apt-get update
+    sudo apt-get install ambiance-dark-blue
+    ```
+
+* I use a split URxvt/Tilda for my dropdown terminals
+    * Other installs required:
+    ```shell
+    $ ## xsel for URxvt clipboard // URxvt
+    $ sudo apt-get install xsel rxvt-unicode-256color
+    $ ## Perl functions for copy/paste
+    $ git clone https://github.com/muennich/urxvt-perls.git
+    $ sudo cp urxvt-perls/* /usr/lib/urxvt/perl/
+    $ ## Now tools for the dropdown terminals (tdrop)
+    $ sudo apt-get install xdotool
+    $ git clone https://github.com/angelic-sedition/tdrop.git
+    $ cd tdrop
+    $ sudo make install
+    ```
 
 ## Other Notes
 
@@ -28,7 +48,9 @@
 
 ## Images
 
-The rest of the of the configuration files can be found in my settings for [Conky] (https://github.com/Alexhuszagh/conky).
+The rest of the of the configuration files can be found in my settings for [Conky] (https://github.com/Alexhuszagh/conky) and [Dot Files] (https://github.com/Alexhuszagh/dotfiles).
 
-![Image of running desktop]
-(http://i.imgur.com/c2QxeQI.png)
+![Image of functionning dock]
+(http://i.imgur.com/auyIM0A.png)
+![Image of tiled and floating dropdown terminals]
+(http://i.imgur.com/ZqAPFi4.png)
