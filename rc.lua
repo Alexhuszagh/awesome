@@ -37,7 +37,7 @@ editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 browser = "chromium-browser"
 
-font = "Inconsolata 11"
+font = "Inconsolata 15"
 
 -- {{ These are the power arrow dividers/separators }} --
 arr1 = wibox.widget.imagebox()
@@ -139,7 +139,7 @@ loadrc("errors")
 loadrc("signals")
 -- Set layout tags and process screens
 loadrc("tags")
-loadrc("xrandr")
+--loadrc("xrandr")
 -- Run applications and set rules
 loadrc("xrun")
 loadrc("rules")

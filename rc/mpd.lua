@@ -1,7 +1,7 @@
 local awesompd = require('awesompd/awesompd')
 
 musicwidget = awesompd:create() -- Create awesompd widget
-musicwidget.font = "Liberation Mono" -- Set widget font
+musicwidget.font = font -- Set widget font
 -- musicwidget.font_color = "#FFFFFF" --Set widget font color
 -- musicwidget.background = "#000000" --Set widget background color
 musicwidget.scrolling = true -- If true, the text in the widget will be scrolled

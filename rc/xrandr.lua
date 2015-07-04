@@ -114,7 +114,7 @@ local function xrandr()
                 icon = icon,
                 timeout = 4,
                 screen = mouse.screen, -- Important, not all screens may be visible
-                font = "Free Sans 18",
+                font = font,
                 replaces_id = state.cid }).id
 
    -- Setup the timer

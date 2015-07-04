@@ -11,7 +11,7 @@
 
 local gtk = [[
 gtk-application-prefer-dark-theme = true
-gtk-font-name="Inconsolata 11"
+gtk-font-name="]] .. font .. [["
 gtk-theme-name="Ambiance-Dark-Blue"
 gtk-icon-theme-name="Humanity-Dark-Graphite"
 gtk-fallback-icon-theme="gnome"

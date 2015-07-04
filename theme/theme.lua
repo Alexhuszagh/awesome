@@ -8,7 +8,7 @@ theme = {}
 pathToConfig = awful.util.getdir("config") .. "/"
 themeDir = pathToConfig .. "theme/"
 
-theme.font          = "sans 8"
+theme.font          = font
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#1E2320"

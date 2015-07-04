@@ -6,7 +6,7 @@ volume = { wibox = wibox.widget.textbox(),
 vicious.register(volume.wibox, audio, function (widget, args)
 
     if args[1] ~= nil then
-      volume.text = '<span background="#4B3B51" font="Inconsolata 11"><span font="Inconsolata 11" color="#EEEEEE"> Vol: '..math.floor(args[1])..' </span></span>'
+      volume.text = '<span background="#4B3B51" font="' .. font .. '"><span font="' .. font .. '" color="#EEEEEE"> Vol: '..math.floor(args[1])..' </span></span>'
     end
     return volume.text
   end, 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")

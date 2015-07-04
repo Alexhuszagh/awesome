@@ -23,7 +23,7 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
     else
         return ""
     end
-    return '<span background="#C2C2A4" font="Inconsolata 11"> <span font ="Inconsolata 11" color="#FFFFFF">'..args["{"..interface.." down_kb}"]..'kbps'..'</span></span>' end, 10)
+    return '<span background="#C2C2A4" font="' .. font .. '" <span font ="' .. font .. '" color="#FFFFFF">'..args["{"..interface.." down_kb}"]..'kbps'..'</span></span>' end, 10)
 
 ---{{---| Wifi Signal Widget |-------
 neticon = wibox.widget.imagebox()
@@ -44,13 +44,13 @@ baticon = wibox.widget.imagebox()
 baticon:set_image(beautiful.baticon)
 
 batwidget = wibox.widget.textbox()
-vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Inconsolata 11"><span font="Inconsolata 11" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 30, private.battery)
+vicious.register( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="' .. font .. '"><span font="'.. font .. '" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 30, private.battery)
 
 --{{---| File Size widget |-----
 fswidget = wibox.widget.textbox()
 
 vicious.register(fswidget, vicious.widgets.fs,
-'<span background="#D0785D" font="Inconsolata 11"> <span font="Inconsolata 11" color="#EEEEEE">${/ used_gb}/${/ size_gb} GB </span></span>',
+'<span background="#D0785D" font="' .. font .. '"> <span font="' .. font .. '" color="#EEEEEE">${/ used_gb}/${/ size_gb} GB </span></span>',
 800)
 
 fsicon = wibox.widget.imagebox()
@@ -59,7 +59,7 @@ fsicon:set_image(beautiful.fsicon)
 --{{---| CPU / sensors widget |-----------
 cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
-'<span background="#4B696D" font="Inconsolata 11"> <span font="Inconsolata 11" color="#DDDDDD">$2%<span color="#888888">·</span>$3% </span></span>', 5)
+'<span background="#4B696D" font="' .. font .. '"> <span font="' .. font .. '" color="#DDDDDD">$2%<span color="#888888">·</span>$3% </span></span>', 5)
 
 cpuicon = wibox.widget.imagebox()
 cpuicon:set_image(beautiful.cpuicon)
@@ -67,7 +67,7 @@ cpuicon:set_image(beautiful.cpuicon)
 --{{--| MEM widget |-----------------
 memwidget = wibox.widget.textbox()
 
-vicious.register(memwidget, vicious.widgets.mem, '<span background="#777E76" font="Inconsolata 11"> <span font="Inconsolata 11" color="#EEEEEE" background="#777E76">$2MB </span></span>', 20)
+vicious.register(memwidget, vicious.widgets.mem, '<span background="#777E76" font="' .. font .. '"> <span font="' .. font .. '" color="#EEEEEE" background="#777E76">$2MB </span></span>', 20)
 memicon = wibox.widget.imagebox()
 memicon:set_image(beautiful.mem)
 

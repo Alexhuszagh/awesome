@@ -18,7 +18,7 @@ function processwalker()
     return coroutine.wrap(yieldprocess)
 end
 
-function run_once(process, cmd)
+function run_once(process, cmd, shell)
    assert(type(process) == "string")
    local regex_killer = {
       ["+"]  = "%+", ["-"] = "%-",
@@ -29,26 +29,31 @@ function run_once(process, cmd)
    return
       end
    end
-   return awful.util.spawn(cmd or process)
+   if shell then
+     return awful.util.spawn_with_shell(cmd or process)
+   else
+     return awful.util.spawn(cmd or process)
+   end
 end
 -- }}}
 
 -- {{ I need redshift to save my eyes }} -
 run_once("redshift -l 49.26:-123.23")
 -- Start user applets
-run_once("clementine")
 run_once("nm-applet")
-run_once("dropbox", "dropbox start")
 awful.util.spawn_with_shell("xmodmap ~/.speedswapper")
 -- Start gnome authentification
-run_once("sudo polkit-gnome-authentication-agent-1")
-run_once("sudo /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
+run_once("dbus-launch --exit-with-session $session_command")
+run_once("polkit-gnome-authentication-agent-1")
+run_once("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
+-- run_once("openvpn", "gksudo openvpn home/alex/vpn/TCP/USA.Texas.Dallas_LOC2S4.TCP.ovpn")
 -- Start MPD & ncmpcpp
-run_once("~/.config/autostart/mpd.desktop")
+run_once("mpd")
 -- Start Tilda, Drop down term
-run_once("tilda")
--- Start Compositor
-run_once("xcompmgr", "xcompmgr -CcfF -I-.02 -O-.04 -D0001 -t-5 -l-5 -r4.2 -o.82")
+run_once("tilda", "sleep 0.1; tilda -c ncmpcpp & sleep 0.1; tilda -c python & sleep 0.1; tilda -c node & sleep 0.1; tilda &", true)
+-- Start Compositor // Switched to Compton for speed + stability
+--run_once("xcompmgr", "xcompmgr -CcfF -I-.02 -O-.04 -D0001 -t-5 -l-5 -r4.2 -o.82")
+run_once("compton")
 -- Start conky last
 run_once("conky")
 
@@ -59,7 +64,9 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 do
   local cmds =
   {
-    "~/.config/awesome/sh/alarm.sh"
+    "~/.config/awesome/sh/alarm.sh",
+    "/usr/bin/gnome-keyring-daemon --start --components=gpg",
+    "/usr/bin/gnome-keyring-daemon --start --components=ssh"
     -- }}
 
     -- {{ Launch Foreground tasks

@@ -4,9 +4,10 @@ function statusbar.set_border(s)
   local wb = awful.wibox { position = statusbar.position,
                            screen = s,
                            height = 1,
-                           --ontop = true,
+                           ontop = true,
                            sticky = true,
-                           above = true }
+                           above = true,
+                           floating = false }
   wb:set_bg("#101010")
   statusbar.bottomborder = wb
 end
